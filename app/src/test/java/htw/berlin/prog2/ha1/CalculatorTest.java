@@ -88,7 +88,26 @@ class CalculatorTest {
         assertEquals(expected, actual);
     }
 
+    // Meine Tests
 
-    //TODO hier weitere Tests erstellen
+    // Multiplikation von Zahlen
+    @Test
+    @DisplayName("should display result after multiplying two positive digits")
+    void testMultiplication() {
+
+        // Neues Objekt erstellen
+        Calculator calc = new Calculator();
+
+        // Berechnung
+        calc.pressDigitKey(1);
+        calc.pressBinaryOperationKey("x");
+        calc.pressDigitKey(9);
+        calc.pressEqualsKey();
+
+        // Vergleich erwarteter und aktueller Wert für Test
+        String expected = "9";
+        String actual = calc.readScreen();
+        assertEquals(expected, actual);
+    }
+
 }
-
