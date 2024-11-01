@@ -14,6 +14,11 @@ public class Calculator {
 
     private String latestOperation = "";
 
+
+    // Neue Variable für equals-Wert und Methode und Test pressEqualsKey()
+    private double lastOperand;
+
+
     /**
      * @return den aktuellen Bildschirminhalt als String
      */
@@ -63,10 +68,16 @@ public class Calculator {
      * im Ursprungszustand ist.
      */
     public void pressClearKey() {
-        screen = "0";
-        latestOperation = "";
-        latestValue = 0.0;
+
+        // Fallunterscheidung: Prüfung, ob Screen schon 0, dann erst Variablen 0 setzen. Ansonsten nur Screen 0 setzen.
+        if (screen.equals("0")) {
+            latestOperation = "";
+            latestValue = 0.0;
+        } else {
+            screen = "0";
+        }
     }
+
 
     /**
      * Empfängt den Wert einer gedrückten binären Operationstaste, also eine der vier Operationen
@@ -136,14 +147,26 @@ public class Calculator {
      * und das Ergebnis direkt angezeigt.
      */
     public void pressEqualsKey() {
+
+        // Fallunterscheidung: Aktualisieren nur beim ersten equals-Klick
+        if (lastOperand == 0.0) {
+            lastOperand = Double.parseDouble(screen);
+        }
+
+        // Berechnung vom Ergebnis mit neuem und festem Operator lastOperand
         var result = switch(latestOperation) {
-            case "+" -> latestValue + Double.parseDouble(screen);
-            case "-" -> latestValue - Double.parseDouble(screen);
-            case "x" -> latestValue * Double.parseDouble(screen);
-            case "/" -> latestValue / Double.parseDouble(screen);
+            case "+" -> latestValue + lastOperand;
+            case "-" -> latestValue - lastOperand;
+            case "x" -> latestValue * lastOperand;
+            case "/" -> latestValue / lastOperand;
             default -> throw new IllegalArgumentException();
         };
+
         screen = Double.toString(result);
+
+        // Aktualisierung latestValue mit dem neuen Ergebnis für weitere equal-Klicks
+        latestValue = result;
+
         if(screen.equals("Infinity")) screen = "Error";
         if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
