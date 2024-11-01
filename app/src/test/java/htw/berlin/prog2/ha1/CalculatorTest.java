@@ -110,4 +110,55 @@ class CalculatorTest {
         assertEquals(expected, actual);
     }
 
+    // Test für Fehler bei der Clear-Taste
+    @Test
+    @DisplayName("should only clear screen with single press of clear key")
+    void testSingleClearKey() {
+
+        // Neues Objekt erstellen
+        Calculator calc = new Calculator();
+
+        // Berechnung
+        calc.pressDigitKey(1);
+        calc.pressBinaryOperationKey("+");
+        calc.pressDigitKey(9);
+        calc.pressClearKey();
+
+        // Vergleich erwarteter und aktueller Wert für Test
+        double expectedValue = 1;
+        String expectedOperation = "+";
+        String expectedScreen = "0";
+
+        double actualValue = calc.readLatestValue();
+        String actualOperation = calc.readLatestOperation();
+        String actualScreen = calc.readScreen();
+
+        assertEquals(expectedValue, actualValue);
+        assertEquals(expectedOperation, actualOperation);
+        assertEquals(expectedScreen, actualScreen);
+    }
+
+    // Test für Fehler beim mehrfachen Drücken der Gleich-Taste
+    @Test
+    @DisplayName("should repeat last operation when pressing equals key more than once")
+    void testPressTwiceEqualsKey() {
+
+        // Neues Objekt erstellen
+        Calculator calc = new Calculator();
+
+        // Berechnung
+        calc.pressDigitKey(1);
+        calc.pressBinaryOperationKey("+");
+        calc.pressDigitKey(9);
+        calc.pressEqualsKey();
+        calc.pressEqualsKey();
+        calc.pressEqualsKey();
+
+        // Vergleich erwarteter und aktueller Wert für Test
+        String expected = "28";
+        String actual = calc.readScreen();
+        assertEquals(expected, actual);
+    }
+
+
 }

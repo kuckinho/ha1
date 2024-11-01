@@ -21,6 +21,24 @@ public class Calculator {
         return screen;
     }
 
+
+    // Neue Hilfsmethode zu Rückgabewert latestOperation für Methode und Test pressClearKey()
+    /**
+     * @return den letzten Schlüssel-Operanden als String.
+     */
+    public String readLatestOperation() {
+        return latestOperation;
+    }
+
+    // Neue Hilfsmethode zu Rückgabewert latestValue für Methode und Test pressClearKey()
+    /**
+     * @return den letzten zwischengespeicherten Wert als double.
+     */
+    public double readLatestValue() {
+        return latestValue;
+    }
+
+
     /**
      * Empfängt den Wert einer gedrückten Zifferntaste. Da man nur eine Taste auf einmal
      * drücken kann muss der Wert positiv und einstellig sein und zwischen 0 und 9 liegen.
